@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from .models import GeneratedDocument
 from .models import PracticeData
-
+from .models import TriggerLog
 
 @admin.register(PracticeData)
 class PracticeDataAdmin(admin.ModelAdmin):
@@ -48,4 +48,34 @@ class GeneratedDocumentAdmin(admin.ModelAdmin):
     search_fields = [
         "user__username",
         "template__name",
+    ]
+
+
+@admin.register(TriggerLog)
+class TriggerLogAdmin(admin.ModelAdmin):
+    list_display = [
+        "id",
+        "event_type",
+        "table_name",
+        "row_id",
+        "created_at",
+    ]
+
+    list_filter = [
+        "event_type",
+        "table_name",
+        "created_at",
+    ]
+
+    search_fields = [
+        "table_name",
+        "message",
+    ]
+
+    readonly_fields = [
+        "event_type",
+        "table_name",
+        "row_id",
+        "message",
+        "created_at",
     ]

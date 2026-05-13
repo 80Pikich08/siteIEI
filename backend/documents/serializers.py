@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from .models import GeneratedDocument
 from .models import PracticeData
-
+from .models import TriggerLog
 
 class PracticeDataSerializer(serializers.ModelSerializer):
     class Meta:
@@ -58,3 +58,16 @@ class GeneratedDocumentSerializer(serializers.ModelSerializer):
             return obj.file.url
 
         return request.build_absolute_uri(obj.file.url)
+
+
+class TriggerLogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TriggerLog
+        fields = [
+            "id",
+            "event_type",
+            "table_name",
+            "row_id",
+            "message",
+            "created_at",
+        ]

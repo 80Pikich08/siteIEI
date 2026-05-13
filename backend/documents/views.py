@@ -10,7 +10,9 @@ from .models import GeneratedDocument
 from .serializers import GeneratedDocumentSerializer
 from .serializers import PracticeDataSerializer
 from .services import GenerateDocx
-
+from accounts.permissions import IsProfileAdmin
+from .models import TriggerLog
+from .serializers import TriggerLogSerializer
 
 class GenerateDocumentsView(APIView):
     permission_classes = [IsAuthenticated]
@@ -80,3 +82,11 @@ class MyDocumentsListView(generics.ListAPIView):
         context["request"] = self.request
 
         return context
+
+
+class TriggerLogListView(generics.ListAPIView):
+    permission_classes = [IsProfileAdmin]
+    serializer_class = TriggerLogSerializer
+
+    def get_queryset(self):
+        return TriggerLog.objects.order_by("-created_at")[:100]
